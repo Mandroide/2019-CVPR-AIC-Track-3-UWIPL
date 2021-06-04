@@ -1,9 +1,9 @@
-import cv2
-import os
-import numpy as np
 import argparse
+import os
 import uuid
-import scipy.spatial
+
+import cv2
+import numpy as np
 
 # Read the list of camera folders
 with open("./list_cam.txt", "r") as f:

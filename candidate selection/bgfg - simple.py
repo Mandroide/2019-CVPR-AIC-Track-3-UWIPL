@@ -1,6 +1,6 @@
-import cv2
 import os
-import numpy as np
+
+import cv2
 
 rt = './data/aic19-track3-train-data'
 videos = os.listdir(rt)

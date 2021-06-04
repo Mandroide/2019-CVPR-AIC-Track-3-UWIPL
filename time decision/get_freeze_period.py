@@ -1,6 +1,4 @@
 import cv2
-import os
-import sys
 
 videoFolder="D:\\AIC2019\\aic19-track3-train-data\\"
 output = "D:\\AIC2019\\frozen_frames_training.txt"

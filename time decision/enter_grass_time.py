@@ -1,6 +1,5 @@
 import cv2
-import os
-import sys
+
 stopTimePath = "D:\\AIC2019\\stop_time.txt"
 SCTPath = "D:\\AIC2019\\yolo_txt_result_processed\\"
 maskPath = "D:\\AIC2019\\aic19-track3-frames-svm-k4-fill\\"
