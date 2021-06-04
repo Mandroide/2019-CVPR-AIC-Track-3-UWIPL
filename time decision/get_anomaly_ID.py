@@ -57,7 +57,7 @@ for i in  range(len(content)):
         y1 = int(words[6]) -margin
         y2 = int(words[7]) +margin
         cv2.rectangle(color,(x1, y1), (x2, y2), (0,255,0), 3)
-        count = 0;
+        count = 0
         if y1 > 410:
             y1 = "410"
         if y2 > 410:

@@ -25,13 +25,13 @@ for i in range(1,101):
             if cv2.countNonZero(b) <= RGBDiffThresh and cv2.countNonZero(g) <= RGBDiffThresh and cv2.countNonZero(r) <= RGBDiffThresh:
                 if start == -1:
                     start = count - 1
-                    consec = 0;
+                    consec = 0
             elif start != -1:
-                consec += 1;
+                consec += 1
                 if consec > DiffAllowance:
                     if count - start - consec > MinFrames:
                         print("vid %d: [%d,%d]\n"%(i,start, count-1-consec))
-                        out.write("%d %d %d\n"%(i, start, count-1-consec));
+                        out.write("%d %d %d\n"%(i, start, count-1-consec))
                     start = -1
                     consec = 0
                     
@@ -40,4 +40,4 @@ for i in range(1,101):
     if start != - 1 and start != count -1:
         print("vid %d\n" % i)
         start = - 1
-out.close();
+out.close()

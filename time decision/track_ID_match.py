@@ -31,9 +31,9 @@ for m in range(1,101):
         TrackingPath = SCTPath + "%0.2d_%d.txt"%(m,n)
         outPath = outFolder + "%0.2d_%d.txt"%(m,n)
         match = []
-        matchFound = 0;
-        lastindex=0;
-        lastframe = 0;
+        matchFound = 0
+        lastindex=0
+        lastframe = 0
         with open(TrackingPath) as f:
             content = f.readlines()
         content = [x.strip('\n') for x in content]

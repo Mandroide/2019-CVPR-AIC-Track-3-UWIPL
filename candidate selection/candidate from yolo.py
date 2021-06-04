@@ -50,8 +50,8 @@ previous_Type = None
 			    COUNT_LIST.append('first frame ' + str(max(k-count,8*fps)))
 			    output = 1
 			    tempfile = path + str(num) + '/vid' + str(num) + '_' + str(max(k-count+1,8*fps)) + '.txt'
-			    framenum=max(k-count+1,8*fps)+1;
-			    loop = 0
+			    framenum=max(k-count+1,8*fps)+1
+                loop = 0
 			    while loop==0:
 				tempfile = path + str(num) + '/vid' + str(num) + '_' + str(framenum) + '.txt'
 			        with open(tempfile) as f:
@@ -73,8 +73,8 @@ previous_Type = None
 	    COUNT_LIST.append('first frame ' + str(max(k-count,8*fps)))
 	    output = 1
 	    tempfile = path + str(num) + '/vid' + str(num) + '_' + str(max(k-count+1,8*fps)) + '.txt'
-	    framenum=max(k-count+1,8*fps)+1;
-	    loop = 0
+	    framenum=max(k-count+1,8*fps)+1
+        loop = 0
 	    while loop==0:
 		tempfile = path + str(num) + '/vid' + str(num) + '_' + str(framenum) + '.txt'
 	        with open(tempfile) as f:

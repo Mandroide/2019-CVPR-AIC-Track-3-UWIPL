@@ -229,8 +229,8 @@ def fill_regions(frame):
     mask = np.zeros((h+2, w+2), np.uint8)
      
     # Floodfill from point (0, 0)
-    cv2.floodFill(im_floodfill, mask, (0,0), 255);
-     
+    cv2.floodFill(im_floodfill, mask, (0,0), 255)
+
     # Invert floodfilled image
     im_floodfill_inv = cv2.bitwise_not(im_floodfill)
      
