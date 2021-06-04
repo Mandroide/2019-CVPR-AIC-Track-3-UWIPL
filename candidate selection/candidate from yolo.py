@@ -69,7 +69,7 @@ previous_Type = None
         COUNT_LIST.append('undetected ' + str(count+consec))
     else:
         COUNT_LIST.append('detected ' + str(count+consec))
-        if count >= 60*fps or (count >=40*fps and k < 40*fps and count >= k-8*fps):  # when detected condition over 1 min, record the video type as positive
+        if count >= 60*fps or (count >= 40 * fps > k and count >= k - 8 * fps):  # when detected condition over 1 min, record the video type as positive
 	    COUNT_LIST.append('first frame ' + str(max(k-count,8*fps)))
 	    output = 1
 	    tempfile = path + str(num) + '/vid' + str(num) + '_' + str(max(k-count+1,8*fps)) + '.txt'

@@ -126,7 +126,7 @@ for k in range(len(content)):
             words2 = lines[i].split(',')
 
             # search SCT results for corresponding trajectory ID within 80 frames (10 fps) of when anomaly candidates appear in background
-            if(int(words2[0]) <= frame2 and int(words2[0]) > frame2 - timeframe):
+            if(frame2 >= int(words2[0]) > frame2 - timeframe):
                 boxB=[int(words2[2]), int(words2[3]), int(words2[2])+int(words2[4]), int(words2[3])+int(words2[5])]
                 if(bb_intersection_over_union(boxA, boxB) > IOUThresh):
                     out.write("%d %d %d %d %d %d %d\n"%(int(words[0]), part, int(words2[1]), int(words[4]), int(words[5]), int(words[6]), int(words[7])))

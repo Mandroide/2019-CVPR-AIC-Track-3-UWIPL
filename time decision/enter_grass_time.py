@@ -28,7 +28,7 @@ for i in range(len(content)):
     # check 30s before stop time to see if car enters grass first
     for j in range(len(content2)):
         words2 = content2[j].split(',')
-        if(int(words2[0]) >=  int(words[1])/3-300 and int(words2[0]) < int(words[1])/3 and words2[1] not in inGrassID):
+        if(int(words[1])/3-300 <= int(words2[0]) < int(words[1])/3 and words2[1] not in inGrassID):
             x1 = int(words2[2])
             x2 = int(words2[2])+int(words2[4])
             y1 = int(words2[3])
@@ -56,7 +56,7 @@ for i in range(len(content)):
             start = 0
             for j in range(len(content2)):
                 words2 = content2[j].split(',')
-                if(int(words2[0]) >=  int(words[1])/3-300 and int(words2[0]) < int(words[1])/3 and words2[1] == ID):
+                if(int(words[1])/3-300 <= int(words2[0]) < int(words[1])/3 and words2[1] == ID):
                     x1 = int(words2[2])
                     x2 = int(words2[2])+int(words2[4])
                     y1 = int(words2[3])
