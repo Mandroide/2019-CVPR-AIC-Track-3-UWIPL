@@ -26,7 +26,7 @@ previous_Type = None
         else:
             current_Type = 1
         # first file
-        if previous_Type == None:
+        if previous_Type is None:
             previous_Type = current_Type
             count += 1
         # all the other files
