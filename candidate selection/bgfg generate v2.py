@@ -135,10 +135,7 @@ def bg_subtract(arg_in):
 
             # Noise removal functions
             fg_mask = apply_filter(fg_img)
-            fg_mask2 = fg_mask.copy()
             fg_mask = cv2.bitwise_and(fg_mask, fg_mask, mask=vroi2)  # Second ROI mask
-            # fg_mask = apply_morphology(fg_mask)
-            # fg_mask = fill_regions(fg_mask)
 
             # Segment the foreground using the foreground mask
             fg_seg = cv2.bitwise_and(frame, frame, mask=fg_mask)
@@ -160,7 +157,6 @@ def bg_subtract(arg_in):
 
                 kp = cv2.waitKey(5)
                 if kp == ord('s'):
-                    sv_frame = cv2.resize(bg_img, None, fx=1/scale, fy=1/scale)
                     cv2.imwrite(dirname + "bg_img_{0}_{1}_{2}_{3}.jpg".format(*v.split('/')[1:-1], str(uuid.uuid4())[0:10] ), bg_img)
                 elif kp == ord('n'):
                     break
@@ -207,15 +203,11 @@ def apply_filter(frame):
 def apply_morphology(frame):
     """Applies morphological operations to remove noise and to segment vehicles
     """
-    kernel_close = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 5))
     kernel_dilate = cv2.getStructuringElement(cv2.MORPH_CROSS, (5, 5))
     kernel_open = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
-    # kernel_grad = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
 
     frame = cv2.morphologyEx(frame, cv2.MORPH_OPEN, kernel=kernel_open)         # Noise removal
-    # frame = cv2.morphologyEx(frame, cv2.MORPH_CLOSE, kernel=kernel_close)
     frame = cv2.morphologyEx(frame, cv2.MORPH_DILATE, kernel=kernel_dilate)     # Expands detected ROIs
-    # frame = cv2.morphologyEx(frame, cv2.MORPH_GRADIENT, kernel=kernel_grad)     # Creates ROI outline
     return frame
 
 
