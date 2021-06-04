@@ -3,7 +3,7 @@ import os
 # iterate every folder -- 1 folder represent 1 video result
 
 def iteration(path, num):
-previous_Type = None
+    previous_Type = None
     COUNT_LIST = []
     count = 0
     Type = False # False means negative type
@@ -37,30 +37,30 @@ previous_Type = None
                 count += 1
             # if change condition, store the type and count number into list of list
             # update the count value to zero and update the type value
-	    elif consec<3*fps and count <60*fps:
-		consec+=1
+            elif consec<3*fps and count <60*fps:
+                consec+=1
             else:
-		consec = 0
+                consec = 0
                 if previous_Type == 0:
                     COUNT_LIST.append('undetected '+ str(count + consec))
                 else:
                     COUNT_LIST.append('detected ' + str(count + consec))
                     if (count >= 60*fps) or (count >=40*fps and k < 60*fps and count >= k-8*fps): # when detected condition over 1 min, record the video type as positive
-			if output == 0:
-			    COUNT_LIST.append('first frame ' + str(max(k-count,8*fps)))
-			    output = 1
-			    tempfile = path + str(num) + '/vid' + str(num) + '_' + str(max(k-count+1,8*fps)) + '.txt'
-			    framenum=max(k-count+1,8*fps)+1
-                loop = 0
-			    while loop==0:
-				tempfile = path + str(num) + '/vid' + str(num) + '_' + str(framenum) + '.txt'
-			        with open(tempfile) as f:
-    				    content = f.readlines()
-				framenum+=1
-				loop = len(content)
-			    for i in range(len(content)):
-				if len(content)<8:
-			    	    outfile.write(str(num)+' '+str(max(k-count+1,8*fps))+ ' '+content[i])
+                        if output == 0:
+                            COUNT_LIST.append('first frame ' + str(max(k-count,8*fps)))
+                            output = 1
+                            tempfile = path + str(num) + '/vid' + str(num) + '_' + str(max(k-count+1,8*fps)) + '.txt'
+                            framenum=max(k-count+1,8*fps)+1
+                            loop = 0
+                            while loop==0:
+                                tempfile = path + str(num) + '/vid' + str(num) + '_' + str(framenum) + '.txt'
+                                with open(tempfile) as f:
+                                    content = f.readlines()
+                                framenum+=1
+                                loop = len(content)
+                            for i in range(len(content)):
+                                if len(content)<8:
+                                    outfile.write(str(num)+' '+str(max(k-count+1,8*fps))+ ' '+content[i])
                         Type = True
                 count = 1
                 previous_Type = current_Type
@@ -70,20 +70,20 @@ previous_Type = None
     else:
         COUNT_LIST.append('detected ' + str(count+consec))
         if count >= 60*fps or (count >= 40 * fps > k and count >= k - 8 * fps):  # when detected condition over 1 min, record the video type as positive
-	    COUNT_LIST.append('first frame ' + str(max(k-count,8*fps)))
-	    output = 1
-	    tempfile = path + str(num) + '/vid' + str(num) + '_' + str(max(k-count+1,8*fps)) + '.txt'
-	    framenum=max(k-count+1,8*fps)+1
-        loop = 0
-	    while loop==0:
-		tempfile = path + str(num) + '/vid' + str(num) + '_' + str(framenum) + '.txt'
-	        with open(tempfile) as f:
-    		    content = f.readlines()
-		framenum+=1
-		loop = len(content)
-	    for i in range(len(content)):
-		if len(content)<8:
-	    	    outfile.write(str(num)+' '+str(max(k-count+1,8*fps))+ ' '+content[i])
+            COUNT_LIST.append('first frame ' + str(max(k-count,8*fps)))
+            output = 1
+            tempfile = path + str(num) + '/vid' + str(num) + '_' + str(max(k-count+1,8*fps)) + '.txt'
+            framenum=max(k-count+1,8*fps)+1
+            loop = 0
+            while loop==0:
+                tempfile = path + str(num) + '/vid' + str(num) + '_' + str(framenum) + '.txt'
+                with open(tempfile) as f:
+                    content = f.readlines()
+                framenum+=1
+                loop = len(content)
+            for i in range(len(content)):
+                if len(content)<8:
+                    outfile.write(str(num)+' '+str(max(k-count+1,8*fps))+ ' '+content[i])
             Type = True
     outfile.close()
     return [COUNT_LIST, Type]
