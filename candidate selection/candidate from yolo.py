@@ -52,14 +52,14 @@ previous_Type = None
 			    tempfile = path + str(num) + '/vid' + str(num) + '_' + str(max(k-count+1,8*fps)) + '.txt'
 			    framenum=max(k-count+1,8*fps)+1;
 			    loop = 0
-			    while(loop==0):
+			    while loop==0:
 				tempfile = path + str(num) + '/vid' + str(num) + '_' + str(framenum) + '.txt'
 			        with open(tempfile) as f:
     				    content = f.readlines()
 				framenum+=1
 				loop = len(content)
 			    for i in range(len(content)):
-				if(len(content)<8):
+				if len(content)<8:
 			    	    outfile.write(str(num)+' '+str(max(k-count+1,8*fps))+ ' '+content[i])
                         Type = True
                 count = 1
@@ -75,14 +75,14 @@ previous_Type = None
 	    tempfile = path + str(num) + '/vid' + str(num) + '_' + str(max(k-count+1,8*fps)) + '.txt'
 	    framenum=max(k-count+1,8*fps)+1;
 	    loop = 0
-	    while(loop==0):
+	    while loop==0:
 		tempfile = path + str(num) + '/vid' + str(num) + '_' + str(framenum) + '.txt'
 	        with open(tempfile) as f:
     		    content = f.readlines()
 		framenum+=1
 		loop = len(content)
 	    for i in range(len(content)):
-		if(len(content)<8):
+		if len(content)<8:
 	    	    outfile.write(str(num)+' '+str(max(k-count+1,8*fps))+ ' '+content[i])
             Type = True
     outfile.close()

@@ -44,9 +44,9 @@ for i in range(len(content)):
     ignore = 0
     for n in range(len(content2)):
 	words3 = content2[n].split(' ');
-	if(int(words3[1])<=(int(words[1])+50)*30/fps and int(words3[2])>=int(words[1])*30/fps and words3[0]==words[0]):
+	if int(words3[1])<=(int(words[1]) + 50)*30/fps and int(words3[2])>=int(words[1])*30/fps and words3[0]==words[0]:
 	    ignore = 1
-    if(ignore == 0):
+    if ignore == 0:
 	    for j in range(min(8*fps,int(words[1])+1), int(words[1])+5):
 		backgroundDetPath = detectionPath + words[0] + '/' + 'vid' + words[0] + '_' + str(j) + '.txt'
 		with open(backgroundDetPath) as g:
@@ -57,16 +57,16 @@ for i in range(len(content)):
 		    words2 = lines[k].split(' ')
 		    boxB = [int(words2[2]), int(words2[4]), int(words2[3]), int(words2[5])]
 		    iou = bb_intersection_over_union(boxA, boxB)
-		    if(iou>0.05):		
+		    if iou>0.05:
 			for n in range(len(content2)):
 			    words3 = content2[n].split(' ');
-			    if(int(words3[0])>int(words[0])):
+			    if int(words3[0])>int(words[0]):
 				break;
-			if(ignore<1):
+			if ignore<1:
 			    print(iou)
 		            out.write("%s %d %s\n"%(words[0], j*6, lines[k]))
 		        break
-		if(iou > 0.05):
+		if iou > 0.05:
 		    break
             
     

@@ -45,33 +45,33 @@ for m in range(1,101):
             words = content[i].split(',')
             ignore=[]
             framelist=[]
-            if(words[1] not in tested):
+            if words[1] not in tested:
                 for j in range (i, len(content)):
                     words2 = content[j].split(',')
-                    if(words2[1] == words[1]):
+                    if words2[1] == words[1]:
                         lastframe = int(words2[0])
                         lastindex = j
                         boxA=[int(words2[2]), int(words2[3]), int(words2[2])+int(words2[4]), int(words2[3])+int(words2[5])]
                 tested.append(words[1])
                 for j in range (lastindex, len(content)):
                     words2 = content[j].split(',')
-                    if(words[1] == words2[1]):
-                        if(words2[0] not in framelist):
+                    if words[1] == words2[1]:
+                        if words2[0] not in framelist:
                             framelist.append(words2[0])
                 for j in range (lastindex, len(content)):
                     words2 = content[j].split(',')
-                    if(words2[0] in framelist):
-                        if(words2[1] not in ignore):
+                    if words2[0] in framelist:
+                        if words2[1] not in ignore:
                             ignore.append(words2[1])
                 for j in range (lastindex, len(content)):
                     words2 = content[j].split(',')
-                    if(int(words2[0])-lastframe > frameRange):
+                    if int(words2[0])-lastframe > frameRange:
                         break
-                    if(int(words2[0]) > lastframe and (words2[1] not in ignore) ):
+                    if int(words2[0]) > lastframe and (words2[1] not in ignore):
                         boxB=[int(words2[2]), int(words2[3]), int(words2[2])+int(words2[4]), int(words2[3])+int(words2[5])]
-                        if(bb_intersection_over_union(boxA, boxB) > IOUThesh):
+                        if bb_intersection_over_union(boxA, boxB) > IOUThesh:
                             temp = [int(words[1]), int(words2[1])]
-                            if(temp not in match):
+                            if temp not in match:
                                 match.append(temp)
                             else:
                                 break
@@ -80,7 +80,7 @@ for m in range(1,101):
         for pair in reversed(match):
             for i in range(len(content)):
                 words = content[i].split(',')
-                if(int(words[1]) == pair[1]):
+                if int(words[1]) == pair[1]:
                     words[1] = str(pair[0])
                     content[i] = "%s,%s,%s,%s,%s,%s,%s,%s,%s"%(words[0],words[1],words[2],words[3],words[4],words[5],words[6],words[7],words[8])
         out = open(outPath,"w")

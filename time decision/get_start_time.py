@@ -37,7 +37,7 @@ with open(stopTimePath) as f:
 content = [x.strip('\n') for x in content]
 for k in range(len(content)):
     words = content[k].split(' ')
-    if(startTime[int(words[0])-1] > int(words[1])):
+    if startTime[int(words[0]) - 1] > int(words[1]):
         startTime[int(words[0])-1] = int(words[1])
 
 # read enter grass times
@@ -47,7 +47,7 @@ content = [x.strip('\n') for x in content]
 for k in range(len(content)):
     words = content[k].split(' ')
     # if enter grass time is less than anomaly start time, it becomes the new anomaly start time
-    if(startTime[int(words[0])-1] > int(words[1])):
+    if startTime[int(words[0]) - 1] > int(words[1]):
         startTime[int(words[0])-1] = int(words[1])
 
 # read background stop time
@@ -57,11 +57,11 @@ content = [x.strip('\n') for x in content]
 for k in range(len(content)):
     words = content[k].split(' ')
     # if background stop time is less than anomaly start time, it becomes the new anomaly start time
-    if(startTime[int(words[0])-1] > int(words[1])):
+    if startTime[int(words[0]) - 1] > int(words[1]):
         startTime[int(words[0])-1] = int(words[1])
 
 for i in range(100):
-    if(startTime[i] != 100000):
+    if startTime[i] != 100000:
         print("%d %d %f\n"%(i+1, startTime[i], startTime[i]/30.0))
         out.write("%d %d %f\n"%(i+1, startTime[i], startTime[i]/30.0))
 out.close()

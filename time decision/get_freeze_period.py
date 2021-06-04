@@ -10,28 +10,28 @@ MinFrames = 120
 
 out = open(output,'w')
 for i in range(1,101):
-    print("vid%d\n"%(i))
+    print("vid%d\n" % i)
     count = 1
-    videoPath = videoFolder + "%d.mp4"%(i)
+    videoPath = videoFolder + "%d.mp4" % i
     cap = cv2.VideoCapture(videoPath)
     ret, frame2 = cap.read()
     start = -1
     consec = 0
-    while(cap.isOpened()):
+    while cap.isOpened():
         frame1 = frame2
         ret, frame2 = cap.read()
-        if(ret == True):
+        if ret == True:
             count +=1
             difference = cv2.subtract(frame1, frame2)
             b, g, r = cv2.split(difference)
             if cv2.countNonZero(b) <= RGBDiffThresh and cv2.countNonZero(g) <= RGBDiffThresh and cv2.countNonZero(r) <= RGBDiffThresh:
-                if(start == -1):
+                if start == -1:
                     start = count - 1
                     consec = 0;
-            elif(start != -1):
+            elif start != -1:
                 consec += 1;
-                if(consec > DiffAllowance):
-                    if(count - start - consec > MinFrames):
+                if consec > DiffAllowance:
+                    if count - start - consec > MinFrames:
                         print("vid %d: [%d,%d]\n"%(i,start, count-1-consec))
                         out.write("%d %d %d\n"%(i, start, count-1-consec));
                     start = -1
@@ -39,7 +39,7 @@ for i in range(1,101):
                     
         else:
             break
-    if(start != - 1 and start != count -1):
-        print("vid %d\n"%(i))
+    if start != - 1 and start != count -1:
+        print("vid %d\n" % i)
         start = - 1
 out.close();

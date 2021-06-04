@@ -51,30 +51,30 @@ for i in  range(len(content)):
     words = content[i].split(' ')
     mask = cv2.imread(maskPath + "\\%0.3d.jpg"%(int(words[0])),cv2.IMREAD_GRAYSCALE)
     color = cv2.imread(maskPath + "\\%0.3d.jpg"%(int(words[0])))
-    if(int(words[1]) < 600):
+    if int(words[1]) < 600:
         x1 = int(words[4]) -margin
         x2 = int(words[5]) +margin
         y1 = int(words[6]) -margin
         y2 = int(words[7]) +margin
         cv2.rectangle(color,(x1, y1), (x2, y2), (0,255,0), 3)
         count = 0;
-        if(y1 > 410):
+        if y1 > 410:
             y1 = "410"
-        if(y2 > 410):
+        if y2 > 410:
             y2 = "410"
-        if(x1 > 800):
+        if x1 > 800:
             x1 = "800"
-        if(x2 > 800):
+        if x2 > 800:
             x2 = "800"
-        if(int(mask[y1-1,x1-1]) < 200):
+        if int(mask[y1 - 1, x1 - 1]) < 200:
             count+=1
-        if(int(mask[y1-1,x2-1]) < 200):
+        if int(mask[y1 - 1, x2 - 1]) < 200:
             count+=1
-        if(int(mask[y2-1,x1-1]) < 200):
+        if int(mask[y2 - 1, x1 - 1]) < 200:
             count+=1
-        if(int(mask[y2-1,x2-1]) < 200):
+        if int(mask[y2 - 1, x2 - 1]) < 200:
             count+=1
-        if(count >= 4):
+        if count >= 4:
             dellist.append(i)
             #print(words)
             #crop = mask[y1:y2, x1:x2]
@@ -98,17 +98,17 @@ for k in range(len(content)):
     frame = int(words[1])
     
     # since videos are split into 5 parts for SCT, we get the part number corresponding to the frame
-    if(frame >150):
-        if(frame < 210*30):
+    if frame >150:
+        if frame < 210*30:
             TrackingPath = SCTPath + "%0.2d_1.txt"%(int(words[0]))
             part = 1
-        elif(frame < 210*30+180*30):
+        elif frame < 210*30+180*30:
             TrackingPath = SCTPath + "%0.2d_2.txt"%(int(words[0]))
             part = 2
-        elif(frame < 210*30+180*30*2):
+        elif frame < 210*30+180*30*2:
             TrackingPath = SCTPath + "%0.2d_3.txt"%(int(words[0]))
             part = 3
-        elif(frame < 210*30+180*30*3):
+        elif frame < 210*30+180*30*3:
             TrackingPath = SCTPath + "%0.2d_4.txt"%(int(words[0]))
             part = 4
         else:
@@ -126,13 +126,13 @@ for k in range(len(content)):
             words2 = lines[i].split(',')
 
             # search SCT results for corresponding trajectory ID within 80 frames (10 fps) of when anomaly candidates appear in background
-            if(frame2 >= int(words2[0]) > frame2 - timeframe):
+            if frame2 >= int(words2[0]) > frame2 - timeframe:
                 boxB=[int(words2[2]), int(words2[3]), int(words2[2])+int(words2[4]), int(words2[3])+int(words2[5])]
-                if(bb_intersection_over_union(boxA, boxB) > IOUThresh):
+                if bb_intersection_over_union(boxA, boxB) > IOUThresh:
                     out.write("%d %d %d %d %d %d %d\n"%(int(words[0]), part, int(words2[1]), int(words[4]), int(words[5]), int(words[6]), int(words[7])))
                     print("video %d car id %d"%(int(words[0]), int(words2[1])))
                     break
-        if(bb_intersection_over_union(boxA, boxB) <= IOUThresh):
+        if bb_intersection_over_union(boxA, boxB) <= IOUThresh:
             out2.write("%s\n"%(content[k]))
 out.close()
 out2.close()
@@ -161,10 +161,10 @@ for k in range(len(content)):
         words2 = lines[i].split(',')
         boxB=[int(words2[2]), int(words2[3]), int(words2[2])+int(words2[4]), int(words2[3])+int(words2[5])]
         iou = 0
-        if(words2[1] == words[2]):
+        if words2[1] == words[2]:
             # if trajectory starts at beginning of part, check previous part
-            if(int(words2[0]) < 20):
-                if(part>1):
+            if int(words2[0]) < 20:
+                if part>1:
                     part-=1
                     TrackingPath = SCTPath + "%0.2d_%d.txt"%(int(words[0]), part)
                     with open(TrackingPath) as h:
@@ -172,15 +172,15 @@ for k in range(len(content)):
                     lines2 = [x.strip('\n') for x in lines2]
                     for j in range(len(lines2)):
                         words3 = lines2[j].split(',')
-                        if(int(words3[0]) > int(lines2[len(lines2)-1].split(',')[0])-5):
+                        if int(words3[0]) > int(lines2[len(lines2) - 1].split(',')[0])-5:
                             #print(words3)
                             boxB=[int(words3[2]), int(words3[3]), int(words3[2])+int(words3[4]), int(words3[3])+int(words3[5])]
                             iou = bb_intersection_over_union(boxA, boxB)
-                            if(iou > IOUThresh):
+                            if iou > IOUThresh:
                                 #print(words3)
                                 out.write("%d %d %d\n"%(int(words[0]), part, int(words3[1])))
                                 break
-                if(iou > IOUThresh):
+                if iou > IOUThresh:
                     break
             # if trajectory does not start at beginning of part, keep current ID
             out.write("%d %d %d\n"%(int(words[0]), part, int(words2[1])))
@@ -201,6 +201,6 @@ for i in range(len(content)):
     lines = [x.strip('\n') for x in lines]
     for j in range(len(lines)):
         words2 = lines[j].split(',')
-        if(words[2] == words2[1]):
+        if words[2] == words2[1]:
             out.write("%s,%s,%s\n"%(words2[0],words2[2],words2[3]))
     out.close()
