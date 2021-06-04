@@ -18,7 +18,7 @@ for i in range(1,101):
     while cap.isOpened():
         frame1 = frame2
         ret, frame2 = cap.read()
-        if ret == True:
+        if ret:
             count +=1
             difference = cv2.subtract(frame1, frame2)
             b, g, r = cv2.split(difference)
