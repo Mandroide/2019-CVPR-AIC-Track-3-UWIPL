@@ -8,7 +8,8 @@ import pathlib
 import cv2
 import numpy as np
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
+repo_path = os.path.dirname(os.path.abspath(__file__)) + "/.."
+sys.path.append(repo_path)
 import util.utils
 
 # Video scaling factor
@@ -17,7 +18,7 @@ scale = 1
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--vpath", type=pathlib.Path, help="Directory containing videos to be processed.",
-                    default=pathlib.Path("../datasets/AIC20_track4/test-data"))
+                    default=pathlib.Path(repo_path + "/datasets/AIC20_track4/test-data"))
     ap.add_argument("-i", "--image", action="store_true", default=False, help="save background images")
     ap.add_argument("-v", "--video", action="store_true", default=False, help="save bg/fg videos")
     ap.add_argument("-p", "--play", action="store_true", default=False, help="Show current frames (will incur runtime increase)")
