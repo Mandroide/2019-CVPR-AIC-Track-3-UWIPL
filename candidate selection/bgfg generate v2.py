@@ -1,18 +1,23 @@
 import argparse
+import itertools
 import os
+import sys
 import uuid
+import pathlib
 
 import cv2
 import numpy as np
 
-# Read the list of camera folders
-with open("./list_cam.txt", "r") as f:
-    vpath = f.read().splitlines()
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
+import util.utils
+
 # Video scaling factor
 scale = 1
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--vpath", type=pathlib.Path, help="Directory containing videos to be processed.",
+                    default=pathlib.Path("../datasets/AIC20_track4/test-data"))
     ap.add_argument("-i", "--image", action="store_true", default=False, help="save background images")
     ap.add_argument("-v", "--video", action="store_true", default=False, help="save bg/fg videos")
     ap.add_argument("-p", "--play", action="store_true", default=False, help="Show current frames (will incur runtime increase)")
@@ -39,17 +44,19 @@ def bg_subtract(arg_in):
     python3 bgfg_generate.py -v -i -hist 256 -nmix 4 -var 25 -bgr 0.6 -lr 0.005 -ct 256
 
     """
-    global vpath
-    vpath = ['../../aic19-track3-test-data/1.mp4']
+    vpath = arg_in.vpath.resolve()
+    vpath = sorted(itertools.chain(vpath.glob('*.avi'), vpath.glob('*.mp4'), vpath.glob('*.mkv')),
+                   key=util.utils.natural_keys)
     # Only run specific videos (specify here)
     # vpath = [vpath[44], vpath[54], vpath[55]]
     for v in vpath:  # Test Videos only, modify this to include other videos
         # Setup VideoCapture object (read Video)
         # cap = cv2.VideoCapture(v + "vdo.avi")
-        cap = cv2.VideoCapture(v)
+        cap = cv2.VideoCapture(str(v))
 
         # Target directory name
-        dirname = "./tmp"
+        dirname = (os.path.dirname(os.path.abspath(__file__)) + "/../data_preprocessed/" + str(v.parent.stem)
+                   + "_bg_detection/")
         # dirname = "./tmp/{0}_{1}_{2}/".format(*v.split('/')[1:-1])
         mkdir_ifndef(dirname)   # Make directory if not exist
 
@@ -58,9 +65,10 @@ def bg_subtract(arg_in):
         vw = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)*scale)
         if arg_in.video:
             fourcc = cv2.VideoWriter_fourcc(*'XVID')
-            v_out = cv2.VideoWriter(dirname + 'v_out.avi', fourcc, 10.0, (2*vh, 2*vw))
-            fg_out = cv2.VideoWriter(dirname + 'fg_roi.avi', fourcc, 10.0, (vh, vw))
+            v_out = cv2.VideoWriter(dirname + 'v_out_' + v.stem + '.avi', fourcc, 10.0, (2*vh, 2*vw))
+            fg_out = cv2.VideoWriter(dirname + 'fg_roi_' + v.stem + '.avi', fourcc, 10.0, (vh, vw))
 
+        v = str(v)
         vroi = 255 * np.ones((vw, vh), dtype=np.uint8)
         vroi2 = 255 * np.ones((vw, vh), dtype=np.uint8)
         # Read in ROI images, first is applied before background subtraction
