@@ -57,7 +57,7 @@ def bg_subtract(arg_in):
 
         # Target directory name
         dirname = (os.path.dirname(os.path.abspath(__file__)) + "/../data_preprocessed/" + str(v.parent.stem)
-                   + "_bg_detection/")
+                   + "_bg_detection/" + v.stem)
         # dirname = "./tmp/{0}_{1}_{2}/".format(*v.split('/')[1:-1])
         pathlib.Path(dirname).mkdir(parents=True, exist_ok=True)   # Make directory if not exist
 
@@ -66,8 +66,8 @@ def bg_subtract(arg_in):
         vw = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)*scale)
         if arg_in.video:
             fourcc = cv2.VideoWriter_fourcc(*'XVID')
-            v_out = cv2.VideoWriter(dirname + 'v_out_' + v.stem + '.avi', fourcc, 10.0, (2*vh, 2*vw))
-            fg_out = cv2.VideoWriter(dirname + 'fg_roi_' + v.stem + '.avi', fourcc, 10.0, (vh, vw))
+            v_out = cv2.VideoWriter(dirname + '/v_out_' + v.stem + '.avi', fourcc, 10.0, (2*vh, 2*vw))
+            fg_out = cv2.VideoWriter(dirname + '/fg_roi_' + v.stem + '.avi', fourcc, 10.0, (vh, vw))
 
         v = str(v)
         vroi = 255 * np.ones((vw, vh), dtype=np.uint8)
@@ -166,7 +166,7 @@ def bg_subtract(arg_in):
 
                 kp = cv2.waitKey(5)
                 if kp == ord('s'):
-                    cv2.imwrite(dirname + "bg_img_{0}_{1}_{2}_{3}.jpg".format(*v.split('/')[1:-1], str(uuid.uuid4())[0:10] ), bg_img)
+                    cv2.imwrite(dirname + "/bg_img_{0}_{1}_{2}_{3}.jpg".format(*v.split('/')[1:-1], str(uuid.uuid4())[0:10] ), bg_img)
                 elif kp == ord('n'):
                     break
                 elif kp == ord('q'):
@@ -191,7 +191,7 @@ def bg_subtract(arg_in):
         # Save background image
         if arg_in.image:
             bg_img = bs.getBackgroundImage()
-            cv2.imwrite(dirname + " bg_img_{0}_{1}_{2}.jpg".format(*v.split('/')[1:-1]), bg_img)
+            cv2.imwrite(dirname + "/bg_img_{0}_{1}_{2}.jpg".format(*v.split('/')[1:-1]), bg_img)
 
 
 def apply_filter(frame):
