@@ -58,7 +58,7 @@ def bg_subtract(arg_in):
         dirname = (os.path.dirname(os.path.abspath(__file__)) + "/../data_preprocessed/" + str(v.parent.stem)
                    + "_bg_detection/")
         # dirname = "./tmp/{0}_{1}_{2}/".format(*v.split('/')[1:-1])
-        mkdir_ifndef(dirname)   # Make directory if not exist
+        pathlib.Path(dirname).mkdir(parents=True, exist_ok=True)   # Make directory if not exist
 
         # get video width/height, modified by scale
         vh = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)*scale)
@@ -245,12 +245,6 @@ def fill_regions(frame):
     # Combine the two images to get the foreground.
     im_out = frame | im_floodfill_inv
     return im_out
-
-
-def mkdir_ifndef(dirname):
-    if not os.path.isdir(dirname):
-        os.mkdir(dirname)
-
 
 if __name__ == "__main__":
     main()
